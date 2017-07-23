@@ -21,6 +21,7 @@ import XCTest
 @testable import Logger
 
 class LoggerTests: XCTestCase {
+    
     func testDebug() {
         Logger.debug("Test")
     }
