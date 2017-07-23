@@ -21,8 +21,12 @@ import Foundation
 
 private let globalQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .default, attributes: .concurrent, target: nil)
 
+/// A main class for Logging.
+///
+/// You use to invoke log, and can add custom destinations.
 open class Logger {
 
+    /// Destination types for whole loggers. It will be add destination in all loggers. If you want to configure it, You can get the destination object by `destinations(forType:)` or `destination(forType:) on instance.
     public static var globalDestinationTypes: [LoggerDestination.Type] = [] {
         didSet {
             globalQueue.async {
@@ -37,9 +41,16 @@ open class Logger {
 
     private static var loggers: [ObjectIdentifier: Weak<Logger>] = [:]
 
+    class func destinations<T: LoggerDestination>(forType type: T.Type) -> [T] {
+        return self.loggers.values.flatMap({$0.weakObject?.destinations[ObjectIdentifier(type)] as? T})
+    }
+
+    /// A identifier will be used in destinaion
     public let identifier: String?
+    /// A category will be used in destinaion
     public let category: String?
 
+    /// Destination types `Logger` instance. If you want to configure it, You can get the destination object by `destination(forType:)`.
     public var destinationTypes: [LoggerDestination.Type] {
         didSet {
             self.updateDestinations()
