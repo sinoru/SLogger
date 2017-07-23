@@ -69,7 +69,7 @@ open class Logger {
     }
 
     private func updateDestinations() {
-        var destinations = [ObjectIdentifier:LoggerDestination]()
+        var destinations = [ObjectIdentifier: LoggerDestination]()
 
         (self.destinationTypes + type(of: self).globalDestinationTypes).forEach { destinationType in
             guard self.destinations[ObjectIdentifier(destinationType)] == nil else {
