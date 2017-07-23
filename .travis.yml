@@ -37,13 +37,11 @@ jobs:
       os: osx
       osx_image: xcode9
       script:
+        - swift test
         - swift package generate-xcodeproj
         - xcodebuild -scheme Logger-Package -enableCodeCoverage YES test
       after_success:
         - bash <(curl -s https://codecov.io/bash)
-    - stage: test
-      os: osx
-      osx_image: xcode9
     - &linux-test
       stage: test
       os: linux
