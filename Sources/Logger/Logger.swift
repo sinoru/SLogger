@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 import asl
+import LogDestinations
 
 open class Logger {
     public static let shared: Logger = {
@@ -28,48 +29,37 @@ open class Logger {
 
     public let identifier: String?
     public let category: String?
+    
+    private let mainQueue: DispatchQueue
+    
+    private let destinations: [LoggerDestination]
 
-    private let osLog: OSLog!
-    private let asl: asl_object_t!
-
-    public init(identifier: String? = nil, category: String? = nil) {
+    public init(identifier: String? = nil, category: String? = nil, destinationTypes: [LoggerDestination.Type] = [SystemDestination.self]) {
         self.identifier = identifier
         self.category = category
-
-        if #available(OSX 10.12, *) {
-            if let identifier = self.identifier, let category = self.category {
-                self.osLog = OSLog(subsystem: identifier, category: category)
-            } else {
-                self.osLog = OSLog.default
-            }
-            self.asl = nil
-        } else {
-            self.osLog = nil
-            self.asl = asl_open(self.category?.cString(using: .utf8), self.identifier?.cString(using: .utf8), 0)
+        
+        self.mainQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .default, attributes: .concurrent, target: nil)
+        
+        var destinations = [LoggerDestination]()
+        for destinationType in destinationTypes {
+            destinations.append(destinationType.init(identifier: identifier, category: category))
         }
+        self.destinations = destinations
+    }
+    
+    func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
+        self.destinations.map({ destination in
+            return DispatchWorkItem(block: {
+                destination.log(level: level, format: format, args)
+            })
+        }).forEach({self.mainQueue.async(execute: $0)})
     }
 
     func debug(_ format: StaticString,_ args: CVarArg...) {
-        if #available(OSX 10.12, *) {
-            os_log(format, log: self.osLog, type: .debug, args)
-        } else {
-            _ = withVaList(args) { CVarArgsPointer in
-                format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
-                    asl_vlog(self.asl, nil, ASL_LEVEL_DEBUG, $0, CVarArgsPointer)
-                }
-            }
-        }
+        self.log(level: .debug, format: format, args)
     }
 
     func info(_ format: StaticString,_ args: CVarArg...) {
-        if #available(OSX 10.12, *) {
-            os_log(format, log: self.osLog, type: .info, args)
-        } else {
-            _ = withVaList(args) { CVarArgsPointer in
-                format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
-                    asl_vlog(self.asl, nil, ASL_LEVEL_INFO, $0, CVarArgsPointer)
-                }
-            }
-        }
+        self.log(level: .info, format: format, args)
     }
 }
