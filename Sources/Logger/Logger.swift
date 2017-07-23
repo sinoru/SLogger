@@ -42,7 +42,7 @@ open class Logger {
     private static var loggers: [ObjectIdentifier: Weak<Logger>] = [:]
 
     class func destinations<T: LoggerDestination>(forType type: T.Type) -> [T] {
-        return self.loggers.values.flatMap({$0.weakObject?.destinations[ObjectIdentifier(type)] as? T})
+        return self.loggers.values.flatMap {$0.weakObject?.destinations[ObjectIdentifier(type)] as? T}
     }
 
     /// A identifier will be used in destinaion
