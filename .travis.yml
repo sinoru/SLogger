@@ -29,7 +29,7 @@ jobs:
       before_install:
         - travis_retry brew update
       install:
-        - travis_retry brew install swiftlint
+        - travis_retry brew bundle
       script:
         - swiftlint lint --quiet --reporter emoji
     - stage: test
