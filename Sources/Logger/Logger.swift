@@ -18,8 +18,6 @@
 //  limitations under the License.
 
 import Foundation
-import os.log
-import asl
 import LogDestinations
 
 open class Logger {

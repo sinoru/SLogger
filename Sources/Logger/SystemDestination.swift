@@ -46,35 +46,42 @@ public class SystemDestination: LoggerDestination {
     }
 
     public func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
-        switch level {
-        case .debug:
-            if #available(OSX 10.12, *) {
-                os_log(format, log: self.osLog, type: .debug, args)
-            } else {
-                _ = withVaList(args) { CVarArgsPointer in
-                    format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
-                        asl_vlog(self.asl, nil, ASL_LEVEL_DEBUG, $0, CVarArgsPointer)
-                    }
-                }
+        if #available(OSX 10.12, *) {
+            var osLevel: OSLogType
+            
+            switch level {
+            case .debug:
+                osLevel = .debug
+            case .info:
+                osLevel = .info
+            case .warning:
+                osLevel = .default
+            case .error:
+                osLevel = .error
+            case .fault:
+                osLevel = .fault
             }
-        case .info:
-            if #available(OSX 10.12, *) {
-                os_log(format, log: self.osLog, type: .debug, args)
-            } else {
-                _ = withVaList(args) { CVarArgsPointer in
-                    format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
-                        asl_vlog(self.asl, nil, ASL_LEVEL_INFO, $0, CVarArgsPointer)
-                    }
-                }
+            
+            os_log(format, log: self.osLog, type: osLevel, args)
+        } else {
+            var aslLevel: Int32
+            
+            switch level {
+            case .debug:
+                aslLevel = ASL_LEVEL_DEBUG
+            case .info:
+                aslLevel = ASL_LEVEL_INFO
+            case .warning:
+                aslLevel = ASL_LEVEL_WARNING
+            case .error:
+                aslLevel = ASL_LEVEL_ERR
+            case .fault:
+                aslLevel = ASL_LEVEL_CRIT
             }
-        case .error:
-            if #available(OSX 10.12, *) {
-                os_log(format, log: self.osLog, type: .error, args)
-            } else {
-                _ = withVaList(args) { CVarArgsPointer in
-                    format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
-                        asl_vlog(self.asl, nil, ASL_LEVEL_ERR, $0, CVarArgsPointer)
-                    }
+            
+            _ = withVaList(args) { CVarArgsPointer in
+                format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
+                    asl_vlog(self.asl, nil, aslLevel, $0, CVarArgsPointer)
                 }
             }
         }
