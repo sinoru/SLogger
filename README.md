@@ -3,8 +3,6 @@
 
 Logger is a "swifty" logging utility for Swift.
 
-========
-
 ### Usage
 
 Using Swift Package Manager
