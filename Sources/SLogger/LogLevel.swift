@@ -1,8 +1,8 @@
 //
-//  Weak.swift
-//  LoggerTests
+//  LogLevel.swift
+//  SLogger
 //
-//  Created by Sinoru on 2017. 7. 23..
+//  Created by Sinoru on 2017. 3. 14..
 //  Copyright © 2017 Sinoru. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-import Foundation
-
-struct Weak<T: AnyObject> {
-    weak var weakObject: T?
+public enum LogLevel: Int {
+    case fault
+    case error
+    case warning
+    case info
+    case debug
 }

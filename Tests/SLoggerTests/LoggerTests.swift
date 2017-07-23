@@ -1,8 +1,8 @@
 //
-//  LogDestination.swift
-//  Logger
+//  LoggerTests.swift
+//  SLoggerTests
 //
-//  Created by Sinoru on 2017. 7. 23..
+//  Created by Sinoru on 2017. 3. 14..
 //  Copyright © 2017 Sinoru. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +17,24 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-public protocol LoggerDestination {
+import XCTest
+@testable import SLogger
 
-    init(identifier: String?, category: String?)
+class LoggerTests: XCTestCase {
 
-    func log(level: LogLevel, format: StaticString, _ args: CVarArg...)
+    func testDebug() {
+        Logger.debug("Test")
+    }
+
+    func testInfo() {
+        Logger.info("Test")
+    }
+
+    static var allTests: [(String, (LoggerTests) -> () throws -> Void)] {
+        return [
+            ("testDebug", testDebug),
+            ("testInfo", testInfo)
+        ]
+    }
 
 }

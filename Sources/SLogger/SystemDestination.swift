@@ -1,6 +1,6 @@
 //
 //  SystemDestination.swift
-//  Logger
+//  SLogger
 //
 //  Created by Sinoru on 2017. 7. 23..
 //  Copyright © 2017 Sinoru. All rights reserved.

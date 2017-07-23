@@ -1,8 +1,8 @@
 //
-//  Log.swift
-//  Log
+//  Weak.swift
+//  SLogger
 //
-//  Created by Sinoru on 2017. 3. 14..
+//  Created by Sinoru on 2017. 7. 23..
 //  Copyright © 2017 Sinoru. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +17,8 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-public enum LogLevel: Int {
-    case fault
-    case error
-    case warning
-    case info
-    case debug
+import Foundation
+
+struct Weak<T: AnyObject> {
+    weak var weakObject: T?
 }

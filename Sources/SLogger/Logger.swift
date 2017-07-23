@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  Logger
+//  SLogger
 //
 //  Created by Sinoru on 2017. 3. 14..
 //  Copyright © 2017 Sinoru. All rights reserved.

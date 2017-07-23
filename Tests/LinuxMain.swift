@@ -17,7 +17,7 @@
 //  limitations under the License.
 
 import XCTest
-@testable import LoggerTests
+@testable import SLoggerTests
 
 XCTMain([
      testCase(LoggerTests.allTests)

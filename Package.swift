@@ -2,7 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 //
 //  Package.swift
-//  SwiftLogger
+//  SLogger
 //
 //  Created by Sinoru on 2017. 3. 14..
 //  Copyright © 2017 Sinoru. All rights reserved.
@@ -22,13 +22,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "Logger",
+    name: "SLogger",
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "Logger",
+            name: "SLogger",
             type: .dynamic,
-            targets: ["Logger"])
+            targets: ["SLogger"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -38,10 +38,10 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "Logger",
+            name: "SLogger",
             dependencies: []),
         .testTarget(
-            name: "LoggerTests",
-            dependencies: ["Logger"])
+            name: "SLoggerTests",
+            dependencies: ["SLogger"])
     ]
 )
