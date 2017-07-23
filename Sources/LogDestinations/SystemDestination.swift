@@ -24,14 +24,14 @@ import asl
 public class SystemDestination: LoggerDestination {
     private let osLog: OSLog!
     private let asl: asl_object_t!
-    
+
     public let identifier: String?
     public let category: String?
-    
+
     public required init(identifier: String? = nil, category: String? = nil) {
         self.identifier = identifier
         self.category = category
-        
+
         if #available(OSX 10.12, *) {
             if let identifier = self.identifier, let category = self.category {
                 self.osLog = OSLog(subsystem: identifier, category: category)
@@ -44,8 +44,8 @@ public class SystemDestination: LoggerDestination {
             self.asl = asl_open(self.category?.cString(using: .utf8), self.identifier?.cString(using: .utf8), 0)
         }
     }
-    
-    public func log(level: LogLevel, format: StaticString,_ args: CVarArg...) {
+
+    public func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
         switch level {
         case .debug:
             if #available(OSX 10.12, *) {

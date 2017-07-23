@@ -25,6 +25,6 @@ public enum LogLevel {
 
 public protocol LoggerDestination {
     init(identifier: String?, category: String?)
-    
+
     func log(level: LogLevel, format: StaticString, _ args: CVarArg...)
 }

@@ -3,5 +3,5 @@ import XCTest
 
 XCTMain([
      testCase(LoggerTests.allTests),
-     testCase(LogTests.allTests),
+     testCase(LogTests.allTests)
 ])

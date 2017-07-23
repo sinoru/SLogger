@@ -12,15 +12,15 @@ class LogTests: XCTestCase {
     func testDebug() {
         Log.debug("Test")
     }
-    
+
     func testInfo() {
         Log.info("Test")
     }
-    
-    static var allTests : [(String, (LogTests) -> () throws -> Void)] {
+
+    static var allTests: [(String, (LogTests) -> () throws -> Void)] {
         return [
             ("testDebug", testDebug),
-            ("testInfo", testInfo),
+            ("testInfo", testInfo)
         ]
     }
 }

@@ -18,11 +18,11 @@
 //  limitations under the License.
 
 public struct Log {
-    public static func debug(logger: Logger = Logger.shared, _ format: StaticString,_ args: CVarArg...) {
+    public static func debug(logger: Logger = Logger.shared, _ format: StaticString, _ args: CVarArg...) {
         logger.debug(format, args)
     }
 
-    public static func info(logger: Logger = Logger.shared, _ format: StaticString,_ args: CVarArg...) {
+    public static func info(logger: Logger = Logger.shared, _ format: StaticString, _ args: CVarArg...) {
         logger.info(format, args)
     }
 }

@@ -29,24 +29,24 @@ open class Logger {
 
     public let identifier: String?
     public let category: String?
-    
+
     private let mainQueue: DispatchQueue
-    
+
     private let destinations: [LoggerDestination]
 
     public init(identifier: String? = nil, category: String? = nil, destinationTypes: [LoggerDestination.Type] = [SystemDestination.self]) {
         self.identifier = identifier
         self.category = category
-        
+
         self.mainQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .default, attributes: .concurrent, target: nil)
-        
+
         var destinations = [LoggerDestination]()
         for destinationType in destinationTypes {
             destinations.append(destinationType.init(identifier: identifier, category: category))
         }
         self.destinations = destinations
     }
-    
+
     func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
         self.destinations.map({ destination in
             return DispatchWorkItem(block: {
@@ -55,11 +55,11 @@ open class Logger {
         }).forEach({self.mainQueue.async(execute: $0)})
     }
 
-    func debug(_ format: StaticString,_ args: CVarArg...) {
+    func debug(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .debug, format: format, args)
     }
 
-    func info(_ format: StaticString,_ args: CVarArg...) {
+    func info(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .info, format: format, args)
     }
 }
