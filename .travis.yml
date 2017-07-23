@@ -32,9 +32,8 @@ jobs:
         - travis_retry brew install swiftlint
       script:
         - swiftlint lint --quiet --reporter emoji
-    - &test
-      stage: test
+    - stage: test
       os: osx
       osx_image: xcode9
-    - <<: *test
+    - stage: test
       os: linux
