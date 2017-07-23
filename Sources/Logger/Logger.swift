@@ -29,10 +29,10 @@ open class Logger {
 
     public var destinationTypes: [LoggerDestination.Type] {
         get {
-            return self.destinations.map({ type(of: $0) })
+            return self.destinations.map { type(of: $0) }
         }
         set {
-            self.destinations = newValue.map({ $0.init(identifier: identifier, category: category) })
+            self.destinations = newValue.map { $0.init(identifier: identifier, category: category) }
         }
     }
     private var destinations: [LoggerDestination] = []
@@ -73,4 +73,5 @@ open class Logger {
     func fault(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .fault, format: format, args)
     }
+
 }

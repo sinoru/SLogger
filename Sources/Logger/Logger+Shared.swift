@@ -41,5 +41,5 @@ extension Logger {
     public static func fault(_ format: StaticString, _ args: CVarArg...) {
         Logger.shared.log(level: .fault, format: format, args)
     }
-}
 
+}
