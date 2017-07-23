@@ -22,11 +22,11 @@ import XCTest
 
 class LoggerTests: XCTestCase {
     func testDebug() {
-        Log.debug("Test")
+        Logger.debug("Test")
     }
 
     func testInfo() {
-        Log.info("Test")
+        Logger.info("Test")
     }
 
     static var allTests: [(String, (LoggerTests) -> () throws -> Void)] {
