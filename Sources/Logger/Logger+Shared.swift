@@ -18,6 +18,7 @@
 //  limitations under the License.
 
 extension Logger {
+
     public static let shared: Logger = {
         return Logger()
     }()

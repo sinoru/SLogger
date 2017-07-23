@@ -18,7 +18,9 @@
 //  limitations under the License.
 
 public protocol LoggerDestination {
+
     init(identifier: String?, category: String?)
 
     func log(level: LogLevel, format: StaticString, _ args: CVarArg...)
+
 }

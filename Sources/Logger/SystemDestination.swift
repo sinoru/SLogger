@@ -22,6 +22,7 @@ import os.log
 import asl
 
 public class SystemDestination: LoggerDestination {
+
     private let osLog: OSLog!
     private let asl: asl_object_t!
 

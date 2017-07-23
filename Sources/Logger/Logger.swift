@@ -20,6 +20,7 @@
 import Foundation
 
 open class Logger {
+
     static var globalDestinations: [LoggerDestination] = []
 
     public let identifier: String?
