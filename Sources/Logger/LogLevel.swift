@@ -17,10 +17,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-public enum LogLevel {
-    case debug
-    case info
-    case warning
-    case error
+public enum LogLevel: Int {
     case fault
+    case error
+    case warning
+    case info
+    case debug
 }
