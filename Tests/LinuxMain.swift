@@ -2,5 +2,6 @@ import XCTest
 @testable import LoggerTests
 
 XCTMain([
-     testCase(SwiftLoggerTests.allTests),
+     testCase(LoggerTests.allTests),
+     testCase(LogTests.allTests),
 ])
