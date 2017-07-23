@@ -1,7 +1,7 @@
 # SLogger
-[![Build Status](https://travis-ci.org/sinoru/SwiftLogger.svg?branch=master)](https://travis-ci.org/sinoru/SwiftLogger)
-[![codecov](https://codecov.io/gh/sinoru/SwiftLogger/branch/master/graph/badge.svg?token=ZRmyiCxKAB)](https://codecov.io/gh/sinoru/SwiftLogger)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc97e9d512b349309f0bb06f169a6c30)](https://www.codacy.com/app/sinoru/SwiftLogger?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sinoru/SwiftLogger&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/sinoru/SLogger.svg?branch=master)](https://travis-ci.org/sinoru/SLogger)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc97e9d512b349309f0bb06f169a6c30)](https://www.codacy.com/app/sinoru/SLogger?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sinoru/SLogger&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/sinoru/SLogger/branch/master/graph/badge.svg)](https://codecov.io/gh/sinoru/SLogger)
 
 SLogger is a "swifty" lightweight, extensible logging framework.
 
