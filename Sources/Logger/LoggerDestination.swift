@@ -17,14 +17,6 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-public enum LogLevel {
-    case debug
-    case info
-    case warning
-    case error
-    case fault
-}
-
 public protocol LoggerDestination {
     init(identifier: String?, category: String?)
 

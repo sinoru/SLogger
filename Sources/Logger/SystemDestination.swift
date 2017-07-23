@@ -48,7 +48,7 @@ public class SystemDestination: LoggerDestination {
     public func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
         if #available(OSX 10.12, *) {
             var osLevel: OSLogType
-            
+
             switch level {
             case .debug:
                 osLevel = .debug
@@ -61,11 +61,11 @@ public class SystemDestination: LoggerDestination {
             case .fault:
                 osLevel = .fault
             }
-            
+
             os_log(format, log: self.osLog, type: osLevel, args)
         } else {
             var aslLevel: Int32
-            
+
             switch level {
             case .debug:
                 aslLevel = ASL_LEVEL_DEBUG
@@ -78,7 +78,7 @@ public class SystemDestination: LoggerDestination {
             case .fault:
                 aslLevel = ASL_LEVEL_CRIT
             }
-            
+
             _ = withVaList(args) { CVarArgsPointer in
                 format.utf8Start.withMemoryRebound(to: Int8.self, capacity: 1) {
                     asl_vlog(self.asl, nil, aslLevel, $0, CVarArgsPointer)

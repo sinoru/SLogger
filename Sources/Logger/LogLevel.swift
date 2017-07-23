@@ -17,12 +17,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-public struct Log {
-    public static func debug(logger: Logger = Logger.shared, _ format: StaticString, _ args: CVarArg...) {
-        logger.debug(format, args)
-    }
-
-    public static func info(logger: Logger = Logger.shared, _ format: StaticString, _ args: CVarArg...) {
-        logger.info(format, args)
-    }
+public enum LogLevel {
+    case debug
+    case info
+    case warning
+    case error
+    case fault
 }

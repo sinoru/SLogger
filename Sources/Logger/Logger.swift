@@ -18,13 +18,8 @@
 //  limitations under the License.
 
 import Foundation
-import LogDestinations
 
 open class Logger {
-    public static let shared: Logger = {
-        return Logger()
-    }()
-
     public let identifier: String?
     public let category: String?
 
@@ -59,5 +54,17 @@ open class Logger {
 
     func info(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .info, format: format, args)
+    }
+
+    func warning(_ format: StaticString, _ args: CVarArg...) {
+        self.log(level: .warning, format: format, args)
+    }
+
+    func error(_ format: StaticString, _ args: CVarArg...) {
+        self.log(level: .error, format: format, args)
+    }
+
+    func fault(_ format: StaticString, _ args: CVarArg...) {
+        self.log(level: .fault, format: format, args)
     }
 }
