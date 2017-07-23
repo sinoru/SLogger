@@ -33,7 +33,7 @@ public class SystemDestination: LoggerDestination {
         self.identifier = identifier
         self.category = category
 
-        if #available(OSX 10.12, *) {
+        if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
             if let identifier = self.identifier, let category = self.category {
                 self.osLog = OSLog(subsystem: identifier, category: category)
             } else {
@@ -47,7 +47,7 @@ public class SystemDestination: LoggerDestination {
     }
 
     public func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
-        if #available(OSX 10.12, *) {
+        if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
             var osLevel: OSLogType
 
             switch level {
