@@ -41,7 +41,7 @@ public class SystemDestination: LoggerDestination {
             self.asl = nil
         } else {
             self.osLog = nil
-            self.asl = asl_open(self.category?.cString(using: .utf8), self.identifier?.cString(using: .utf8), ASL_OPT_STDERR)
+            self.asl = asl_open(self.category?.cString(using: .utf8), self.identifier?.cString(using: .utf8), UInt32(ASL_OPT_STDERR))
         }
     }
 
