@@ -2,7 +2,7 @@
 //  LogDestination.swift
 //  Logger
 //
-//  Created by Sinoru on 2017. 3. 14..
+//  Created by Sinoru on 2017. 7. 23..
 //  Copyright © 2017 Sinoru. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
