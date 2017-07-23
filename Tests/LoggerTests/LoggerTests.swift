@@ -21,9 +21,18 @@ import XCTest
 @testable import Logger
 
 class LoggerTests: XCTestCase {
+    func testDebug() {
+        Log.debug("Test")
+    }
+
+    func testInfo() {
+        Log.info("Test")
+    }
+
     static var allTests: [(String, (LoggerTests) -> () throws -> Void)] {
         return [
-
+            ("testDebug", testDebug),
+            ("testInfo", testInfo)
         ]
     }
 }
