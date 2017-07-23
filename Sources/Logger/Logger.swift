@@ -27,7 +27,15 @@ open class Logger {
 
     private let mainQueue: DispatchQueue
 
-    private let destinations: [LoggerDestination]
+    public var destinationTypes: [LoggerDestination.Type] {
+        get {
+            return self.destinations.map({ type(of: $0) })
+        }
+        set {
+            self.destinations = newValue.map({ $0.init(identifier: identifier, category: category) })
+        }
+    }
+    private var destinations: [LoggerDestination] = []
 
     public init(identifier: String? = nil, category: String? = nil, destinationTypes: [LoggerDestination.Type] = [SystemDestination.self]) {
         self.identifier = identifier
@@ -35,11 +43,7 @@ open class Logger {
 
         self.mainQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .default, attributes: .concurrent, target: nil)
 
-        var destinations = [LoggerDestination]()
-        for destinationType in destinationTypes {
-            destinations.append(destinationType.init(identifier: identifier, category: category))
-        }
-        self.destinations = destinations
+        self.destinationTypes = destinationTypes
     }
 
     func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
