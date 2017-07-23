@@ -20,6 +20,8 @@
 import Foundation
 
 open class Logger {
+    static var globalDestinations: [LoggerDestination] = []
+
     public let identifier: String?
     public let category: String?
 
@@ -41,11 +43,11 @@ open class Logger {
     }
 
     func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
-        self.destinations.map({ destination in
-            return DispatchWorkItem(block: {
+        for destination in self.destinations + type(of: self).globalDestinations {
+            self.mainQueue.async {
                 destination.log(level: level, format: format, args)
-            })
-        }).forEach({self.mainQueue.async(execute: $0)})
+            }
+        }
     }
 
     func debug(_ format: StaticString, _ args: CVarArg...) {

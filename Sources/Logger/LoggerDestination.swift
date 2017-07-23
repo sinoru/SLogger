@@ -22,3 +22,4 @@ public protocol LoggerDestination {
 
     func log(level: LogLevel, format: StaticString, _ args: CVarArg...)
 }
+

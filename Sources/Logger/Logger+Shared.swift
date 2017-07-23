@@ -30,3 +30,4 @@ extension Logger {
         Logger.shared.log(level: .fault, format: format, args)
     }
 }
+
