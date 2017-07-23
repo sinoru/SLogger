@@ -19,59 +19,95 @@
 
 import Foundation
 
+private let globalQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .default, attributes: .concurrent, target: nil)
+
 open class Logger {
 
-    static var globalDestinations: [LoggerDestination] = []
+    public static var globalDestinationTypes: [LoggerDestination.Type] = [] {
+        didSet {
+            globalQueue.async {
+                self.loggers.values.flatMap { $0.weakObject }.forEach { logger in
+                    logger.mainQueue.async {
+                        logger.updateDestinations()
+                    }
+                }
+            }
+        }
+    }
+
+    private static var loggers: [ObjectIdentifier: Weak<Logger>] = [:]
 
     public let identifier: String?
     public let category: String?
 
-    private let mainQueue: DispatchQueue
-
     public var destinationTypes: [LoggerDestination.Type] {
-        get {
-            return self.destinations.map { type(of: $0) }
-        }
-        set {
-            self.destinations = newValue.map { $0.init(identifier: identifier, category: category) }
+        didSet {
+            self.updateDestinations()
         }
     }
-    private var destinations: [LoggerDestination] = []
+
+    internal let mainQueue: DispatchQueue
+    internal var destinations: [ObjectIdentifier:LoggerDestination] = [:]
 
     public init(identifier: String? = nil, category: String? = nil, destinationTypes: [LoggerDestination.Type] = [SystemDestination.self]) {
         self.identifier = identifier
         self.category = category
 
-        self.mainQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .default, attributes: .concurrent, target: nil)
+        self.mainQueue = DispatchQueue(label: "com.sinoru.Logger." + (identifier ?? "main"), target: globalQueue)
 
         self.destinationTypes = destinationTypes
+
+        type(of: self).loggers.updateValue(Weak(weakObject: self), forKey: ObjectIdentifier(self))
     }
 
-    func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
-        for destination in self.destinations + type(of: self).globalDestinations {
+    deinit {
+        type(of: self).loggers.removeValue(forKey: ObjectIdentifier(self))
+    }
+
+    public func destination<T: LoggerDestination>(forType type: T.Type) -> T? {
+        return self.destinations[ObjectIdentifier(type)] as? T
+    }
+
+    private func updateDestinations() {
+        var destinations = [ObjectIdentifier:LoggerDestination]()
+
+        (self.destinationTypes + type(of: self).globalDestinationTypes).forEach { destinationType in
+            guard self.destinations[ObjectIdentifier(destinationType)] == nil else {
+                return
+            }
+
+            let destination = destinationType.init(identifier: self.identifier, category: self.category)
+            destinations[ObjectIdentifier(destinationType)] = destination
+        }
+
+        self.destinations = destinations
+    }
+
+    public func log(level: LogLevel, format: StaticString, _ args: CVarArg...) {
+        for destination in self.destinations.values {
             self.mainQueue.async {
                 destination.log(level: level, format: format, args)
             }
         }
     }
 
-    func debug(_ format: StaticString, _ args: CVarArg...) {
+    public func debug(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .debug, format: format, args)
     }
 
-    func info(_ format: StaticString, _ args: CVarArg...) {
+    public func info(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .info, format: format, args)
     }
 
-    func warning(_ format: StaticString, _ args: CVarArg...) {
+    public func warning(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .warning, format: format, args)
     }
 
-    func error(_ format: StaticString, _ args: CVarArg...) {
+    public func error(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .error, format: format, args)
     }
 
-    func fault(_ format: StaticString, _ args: CVarArg...) {
+    public func fault(_ format: StaticString, _ args: CVarArg...) {
         self.log(level: .fault, format: format, args)
     }
 
