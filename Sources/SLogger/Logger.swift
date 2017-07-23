@@ -26,7 +26,9 @@ private let globalQueue = DispatchQueue(label: "com.sinoru.Logger", qos: .defaul
 /// You use to invoke log, and can add custom destinations.
 open class Logger {
 
-    /// Destination types for whole loggers. It will be add destination in all loggers. If you want to configure it, You can get the destination object by `destinations(forType:)` or `destination(forType:) on instance.
+    /// Destination types for whole loggers. It will be add destination in all loggers.
+    /// If you want to configure it, You can get the destination object by
+    /// `destinations(forType:)` or `destination(forType:) on instance.
     public static var globalDestinationTypes: [LoggerDestination.Type] = [] {
         didSet {
             globalQueue.async {
