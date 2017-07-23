@@ -23,7 +23,8 @@ let logger = Logger(identifier: "com.sinoru.Nemo", category: "photo")
 logger.error("Loading photo error")
 
 
-// Additionaly You can create a class with LoggerDestination Protocol and add it on globaly or just instance
+// Additionaly You can create a class with LoggerDestination Protocol
+// and add it on globaly or just instance
 
 ```
 
