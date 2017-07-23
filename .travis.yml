@@ -20,7 +20,7 @@
 language: swift
 
 script:
-- swift test
+  - swift test
 
 jobs:
   include:
@@ -32,6 +32,12 @@ jobs:
         - travis_retry brew bundle
       script:
         - swiftlint lint --quiet --reporter emoji
+    - stage: test
+      os: osx
+      osx_image: xcode9
+      script:
+        - swift package generate-xcodeproj
+        - xcodebuild -scheme Logger-Package -enableCodeCoverage YES test
     - stage: test
       os: osx
       osx_image: xcode9
