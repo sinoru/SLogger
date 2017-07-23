@@ -11,22 +11,22 @@ If you want to use as xcodeproj, using `swift package generate-xcodeproj` comman
 ### Requirements
 
 - Swift 4
-- Currently only works on Apple Platform, will be work on Linux too.
+- Currently only works on Apple Platforms, will be work on Linux too.
 
 ### Examples
 
 ```Swift
 // You can try with just:
 Logger.debug("Test!")
+
 // Or
 let logger = Logger(identifier: "com.sinoru.Nemo", category: "photo")
 logger.error("Loading photo error")
 
-
-// Additionaly You can create a class with LoggerDestination Protocol
-// and add it on globaly or just instance
-
 ```
+
+Additionaly You can create a class with LoggerDestination Protocol
+And add it on globaly or just instance
 
 ### License ###
 
